@@ -1794,3 +1794,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tragetTransform: {fileID: 780666038}
+  Move:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 51c8555b-1212-4d0a-814b-878d93cc7de8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0

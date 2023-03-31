@@ -13,6 +13,7 @@ public class Mover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+    
         _navMeshAgent=GetComponent<NavMeshAgent>();
        
     }
@@ -22,9 +23,22 @@ public class Mover : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            _lastRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            MoveToCursor();
         }
         Debug.DrawRay(_lastRay.origin,_lastRay.direction*100);
-        _navMeshAgent.destination = tragetTransform.position;
+        
+        //_navMeshAgent.destination = tragetTransform.position;
+
+        void MoveToCursor()
+        {
+            RaycastHit hit;
+            Ray ray= Camera.main.ScreenPointToRay(Input.mousePosition);
+            bool hasHit = Physics.Raycast(ray, out hit);
+            if (hasHit)
+            {
+                _navMeshAgent.destination = hit.point;
+            }
+        }
+        
     }
 }

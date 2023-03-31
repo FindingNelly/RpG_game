@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8482263444127627327}
   - component: {fileID: 9217033573330488876}
   - component: {fileID: 4044548467583191965}
+  - component: {fileID: -685320527518137621}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -98,3 +99,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-685320527518137621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3825272905835365645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0358645fab5164b41968fc5d39079ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tragetTransform: {fileID: 0}
+  Move:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 646b040a-01d0-42f3-8d8c-722f3d67f435
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 74e283fd-40b4-4b13-bf19-bb44c342a1a6
+      m_Path: <Mouse>/delta/left
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 0
+    m_Flags: 0
