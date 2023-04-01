@@ -5,17 +5,26 @@ using UnityEngine.AI;
 
 public class Mover : MonoBehaviour
 {
-    [SerializeField]  Transform tragetTransform;
+  
     Ray _lastRay;
 
-    NavMeshAgent _navMeshAgent;
-   
+    private NavMeshAgent _navMeshAgent;
+    private Animator _animator;
+    private Camera _camera;
+    
+
     // Start is called before the first frame update
     void Start()
     {
-    
+        //navmesh
         _navMeshAgent=GetComponent<NavMeshAgent>();
-       
+        _navMeshAgent.speed = 5.66f;
+        _navMeshAgent.acceleration = 1000;
+        _navMeshAgent.angularSpeed = 4000;
+        _navMeshAgent.radius=0.3f;
+        
+        _animator=GetComponent<Animator>();
+        _camera=Camera.main;
     }
 
     // Update is called once per frame
@@ -23,22 +32,29 @@ public class Mover : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+           
             MoveToCursor();
+            
         }
-        Debug.DrawRay(_lastRay.origin,_lastRay.direction*100);
+
+        UpdateAnimation();
         
         //_navMeshAgent.destination = tragetTransform.position;
 
         void MoveToCursor()
         {
             RaycastHit hit;
-            Ray ray= Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray= _camera.ScreenPointToRay(Input.mousePosition);
             bool hasHit = Physics.Raycast(ray, out hit);
             if (hasHit)
             {
                 _navMeshAgent.destination = hit.point;
             }
         }
-        
+
+         void UpdateAnimation()
+         {
+             _animator.SetFloat("ForwardSpeed",transform.InverseTransformDirection(_navMeshAgent.velocity).z);
+         }
     }
 }
