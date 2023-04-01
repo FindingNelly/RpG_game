@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,31 +31,18 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-           
-            MoveToCursor();
-            
-        }
+        
 
         UpdateAnimation();
-        
-        //_navMeshAgent.destination = tragetTransform.position;
 
-        void MoveToCursor()
-        {
-            RaycastHit hit;
-            Ray ray= _camera.ScreenPointToRay(Input.mousePosition);
-            bool hasHit = Physics.Raycast(ray, out hit);
-            if (hasHit)
-            {
-                _navMeshAgent.destination = hit.point;
-            }
-        }
-
-         void UpdateAnimation()
+        void UpdateAnimation()
          {
              _animator.SetFloat("ForwardSpeed",transform.InverseTransformDirection(_navMeshAgent.velocity).z);
          }
+    }
+
+    public void MoveTo(Vector3 destination)
+    {
+        _navMeshAgent.destination = destination;
     }
 }
