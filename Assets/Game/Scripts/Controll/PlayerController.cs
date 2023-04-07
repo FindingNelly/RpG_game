@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using RPG.Combat;
 using RPG.Movment;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 namespace RPG.Control
 
@@ -41,7 +38,7 @@ namespace RPG.Control
             {
                 if (Input.GetMouseButton(0))
                 {
-                    _mover.MoveTo(hit.point);
+                    _mover.StartMoveAction(hit.point);
                 }
 
                 return true;
