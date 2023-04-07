@@ -62,7 +62,7 @@ namespace RPG.Control
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        _fighter.Attack();
+                        _fighter.Attack(hit.transform.GetComponent<CombatTraget>());
                     }
 
                     return true;

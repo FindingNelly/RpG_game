@@ -37,14 +37,22 @@ namespace RPG.Movment
 
             UpdateAnimation();
 
-            void UpdateAnimation()
-            {
-                _animator.SetFloat("ForwardSpeed", transform.InverseTransformDirection(_navMeshAgent.velocity).z);
-            }
+          
+        }
+        
+        void UpdateAnimation()
+        {
+            _animator.SetFloat("ForwardSpeed", transform.InverseTransformDirection(_navMeshAgent.velocity).z);
+        }
+
+        public void Stop()
+        {
+            _navMeshAgent.isStopped = true;
         }
 
         public void MoveTo(Vector3 destination)
         {
+            _navMeshAgent.isStopped = false;
             _navMeshAgent.destination = destination;
         }
     }
