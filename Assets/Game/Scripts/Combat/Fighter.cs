@@ -13,31 +13,47 @@ namespace RPG.Combat
     {
         private Transform _target;
         private ActionScheduler _actionScheduler;
+        private Mover _mover;
+        private Animator _animator;
         public float weponRange=2;
 
         private void Start()
         {
+            _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
-            Action();
+            Move();
+            
         }
 
-        public void Action()
+        public void Move()
         {
             if (_target==null) return;
             
             if (Vector3.Distance(transform.position,_target.transform.position)>weponRange)
             {
-                GetComponent<Mover>().MoveTo(_target.position);
+                _mover.MoveTo(_target.position);
                 
             }
             else
             {
-                GetComponent<Mover>().Cancel();
+                _mover.Cancel();
+                AttackBehaviour();
             }
+            
+        }
+
+        public void AttackBehaviour()
+        {
+            _animator.SetTrigger("attack");
+        }
+
+        public void Hit()
+        {
             
         }
 
