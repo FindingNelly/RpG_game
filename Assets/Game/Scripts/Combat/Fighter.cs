@@ -15,7 +15,10 @@ namespace RPG.Combat
         private ActionScheduler _actionScheduler;
         private Mover _mover;
         private Animator _animator;
+        private float timeSinceLastAttack;
+        
         public float weponRange=2;
+        public float attackSpeed = 3;
 
         private void Start()
         {
@@ -26,12 +29,14 @@ namespace RPG.Combat
 
         private void Update()
         {
-            Move();
             
+            MoveToTarget();
         }
 
-        public void Move()
+        public void MoveToTarget()
         {
+            timeSinceLastAttack += Time.deltaTime;
+            //print(timeSinceLastAttack);
             if (_target==null) return;
             
             if (Vector3.Distance(transform.position,_target.transform.position)>weponRange)
@@ -47,9 +52,19 @@ namespace RPG.Combat
             
         }
 
+
         public void AttackBehaviour()
         {
-            _animator.SetTrigger("attack");
+            float timeBetweenAttack = 1 / attackSpeed;
+            if (timeSinceLastAttack>timeBetweenAttack)
+            {
+              
+                _animator.SetTrigger("attack");
+                
+                timeSinceLastAttack = 0;
+                
+            }
+            
         }
 
         public void Hit()
