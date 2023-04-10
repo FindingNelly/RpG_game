@@ -11,20 +11,30 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
+        //getters
         private Transform _target;
         private ActionScheduler _actionScheduler;
         private Mover _mover;
         private Animator _animator;
-        private float timeSinceLastAttack;
+        private Health _health;
+        private Health _healthComponentTarget;
         
+        //private variables
+        private float _timeSinceLastAttack;
+        
+        //public variables
         public float weponRange=2;
         public float attackSpeed = 3;
+        public float damage = 10;
 
         private void Start()
         {
+            //getters
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
+            _health = GetComponent<Health>();
+            
         }
 
         private void Update()
@@ -35,9 +45,11 @@ namespace RPG.Combat
 
         public void MoveToTarget()
         {
-            timeSinceLastAttack += Time.deltaTime;
+            _timeSinceLastAttack += Time.deltaTime;
             //print(timeSinceLastAttack);
             if (_target==null) return;
+            
+            
             
             if (Vector3.Distance(transform.position,_target.transform.position)>weponRange)
             {
@@ -52,24 +64,30 @@ namespace RPG.Combat
             
         }
 
-
         public void AttackBehaviour()
         {
+            //getting the healtcomponent
+            _healthComponentTarget = _target.GetComponent<Health>();
+            
+            
+            //attackspeed and dmg
             float timeBetweenAttack = 1 / attackSpeed;
-            if (timeSinceLastAttack>timeBetweenAttack)
+            
+            if (_timeSinceLastAttack>timeBetweenAttack)
             {
-              
+                //Trigger Hit()
                 _animator.SetTrigger("attack");
-                
-                timeSinceLastAttack = 0;
-                
+                _timeSinceLastAttack = 0;
             }
             
         }
 
+        //animationevent
         public void Hit()
         {
-            
+            if (_target == null) return;
+            _healthComponentTarget.TakeDamage(damage);
+            print(_healthComponentTarget.health);
         }
 
         public void Attack(CombatTraget combatTraget)

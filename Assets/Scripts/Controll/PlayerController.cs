@@ -34,8 +34,10 @@ namespace RPG.Control
         {
             RaycastHit hit; 
             bool hasHit = Physics.Raycast(GetMouseRay, out hit);
+            
             if (hasHit&&hit.collider.CompareTag("Walkable"))
-            {
+            { 
+                
                 if (Input.GetMouseButton(0))
                 {
                     _mover.StartMoveAction(hit.point);
