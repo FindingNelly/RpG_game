@@ -69,7 +69,11 @@ namespace RPG.Combat
         public void AttackBehaviour()
         {
             
-            if (_target.hasDied) return;
+            if (_target.hasDied) 
+            {
+                _animator.SetTrigger("stopAttacking");
+                return;
+            }
            
             
             //Attackspeed and dmg
