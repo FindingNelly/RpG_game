@@ -30,6 +30,11 @@ namespace RPG.Combat
 
         }
 
+        public bool IsDead()
+        {
+            return hasDied;
+        }
+
         public void TakeDamage(float damage)
         {
             

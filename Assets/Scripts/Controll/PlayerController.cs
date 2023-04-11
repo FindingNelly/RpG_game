@@ -12,10 +12,12 @@ namespace RPG.Control
         Camera _camera;
         private Mover _mover;
         private Fighter _fighter;
+        private Animator _animator;
         
         // Start is called before the first frame update
         void Start()
         {
+            _animator = GetComponent<Animator>();
             _camera = Camera.main;
             _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
@@ -40,7 +42,9 @@ namespace RPG.Control
                 
                 if (Input.GetMouseButton(0))
                 {
+                   
                     _mover.StartMoveAction(hit.point);
+                    
                 }
 
                 return true;

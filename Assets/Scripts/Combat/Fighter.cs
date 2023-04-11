@@ -12,12 +12,11 @@ namespace RPG.Combat
     public class Fighter : MonoBehaviour, IAction
     {
         //getters
-        private Transform _target;
+        Health _target;
         private ActionScheduler _actionScheduler;
         private Mover _mover;
         private Animator _animator;
-        private Health _health;
-        private Health _healthComponentTarget;
+        
         
         //private variables
         private float _timeSinceLastAttack;
@@ -33,12 +32,14 @@ namespace RPG.Combat
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
-            _health = GetComponent<Health>();
             
+
+
         }
 
         private void Update()
         {
+            if(_target==null) return;
             
             MoveToTarget();
         }
@@ -53,11 +54,12 @@ namespace RPG.Combat
             
             if (Vector3.Distance(transform.position,_target.transform.position)>weponRange)
             {
-                _mover.MoveTo(_target.position);
+                _mover.MoveTo(_target.transform.position);
                 
             }
             else
             {
+                
                 _mover.Cancel();
                 AttackBehaviour();
             }
@@ -67,8 +69,8 @@ namespace RPG.Combat
         public void AttackBehaviour()
         {
             
-            //getting the healtcomponent
-            _healthComponentTarget = _target.GetComponent<Health>();
+            if (_target.hasDied) return;
+           
             
             //Attackspeed and dmg
             float timeBetweenAttack = 1 / attackSpeed;
@@ -87,21 +89,24 @@ namespace RPG.Combat
         {
             
             if (_target == null) return;
-            _healthComponentTarget.TakeDamage(damage);
-            print(_healthComponentTarget.health);
+            _target.TakeDamage(damage);
+            print(_target.health);
+           
         }
 
         public void Attack(CombatTraget combatTraget)
         {
             
             _actionScheduler.StartAction(this);
-            _target = combatTraget.transform;
+            _target = combatTraget.GetComponent<Health>();
             
             
         }
 
         public void Cancel()
         {
+            
+            
             _target=null;
         }
     }

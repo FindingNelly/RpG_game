@@ -56,6 +56,8 @@ namespace RPG.Movment
 
         public void MoveTo(Vector3 destination)
         {
+            
+            _animator.SetTrigger("stopAttacking");
             _navMeshAgent.destination = destination;
             _navMeshAgent.isStopped = false;
         }
