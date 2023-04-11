@@ -52,7 +52,7 @@ namespace RPG.Combat
             
             
             
-            if (Vector3.Distance(transform.position,_target.transform.position)>weponRange)
+            if (Vector3.Distance(transform.position,_target.transform.position)>weponRange || _target.hasDied)
             {
                 _mover.MoveTo(_target.transform.position);
                 
@@ -68,6 +68,7 @@ namespace RPG.Combat
 
         public void AttackBehaviour()
         {
+            transform.LookAt(_target.transform);
             
             if (_target.hasDied) 
             {
@@ -83,6 +84,7 @@ namespace RPG.Combat
             {
                 //Trigger Hit()
                 _animator.SetTrigger("attack");
+                
                 _timeSinceLastAttack = 0;
             }
             
