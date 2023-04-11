@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 namespace RPG.Combat
@@ -51,7 +52,10 @@ namespace RPG.Combat
             if(hasDied) return;
             hasDied = true;
             _animator.SetTrigger("die");
+            GetComponent<Collider>().enabled = false;
+            GetComponent<NavMeshAgent>().enabled = false;
             
+
         }
     }
 }
