@@ -66,11 +66,11 @@ namespace RPG.Combat
 
         public void AttackBehaviour()
         {
+            
             //getting the healtcomponent
             _healthComponentTarget = _target.GetComponent<Health>();
             
-            
-            //attackspeed and dmg
+            //Attackspeed and dmg
             float timeBetweenAttack = 1 / attackSpeed;
             
             if (_timeSinceLastAttack>timeBetweenAttack)
@@ -85,6 +85,7 @@ namespace RPG.Combat
         //animationevent
         public void Hit()
         {
+            
             if (_target == null) return;
             _healthComponentTarget.TakeDamage(damage);
             print(_healthComponentTarget.health);
@@ -92,6 +93,7 @@ namespace RPG.Combat
 
         public void Attack(CombatTraget combatTraget)
         {
+            
             _actionScheduler.StartAction(this);
             _target = combatTraget.transform;
             
