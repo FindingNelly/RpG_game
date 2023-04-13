@@ -59,9 +59,9 @@ namespace RPG.Combat
             }
             else
             {
-                
-                _mover.Cancel();
                 AttackBehaviour();
+                _mover.Cancel();
+               
             }
             
         }
@@ -72,6 +72,7 @@ namespace RPG.Combat
             
             if (_target.hasDied) 
             {
+                _animator.ResetTrigger("attack");
                 _animator.SetTrigger("stopAttacking");
                 return;
             }
@@ -83,6 +84,7 @@ namespace RPG.Combat
             if (_timeSinceLastAttack>timeBetweenAttack)
             {
                 //Trigger Hit()
+                _animator.ResetTrigger("stopAttacking");
                 _animator.SetTrigger("attack");
                 
                 _timeSinceLastAttack = 0;
@@ -115,5 +117,7 @@ namespace RPG.Combat
             
             _target=null;
         }
+
+       
     }
 }
