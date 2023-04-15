@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using RPG.Combat;
+using RPG.Core;
 using RPG.Movment;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace RPG.Control
         private Mover _mover;
         private NavMeshAgent _navMeshAgent;
         private GameObject _player;
+        private Health _health;
         
         public float distacePlayer=5;
         // Start is called before the first frame update
@@ -22,26 +24,36 @@ namespace RPG.Control
             _fighter = GetComponent<Fighter>();
             _mover = GetComponent<Mover>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            
+            _health = GetComponent<Health>();
+
         }
 
         // Update is called once per frame
         void Update()
         {
+            if(_health.hasDied) return;
             Move();
         }
 
-        private bool Move()
+        private void Move()
         {
             _player = GameObject.FindWithTag("Player");
-            if (_player == null) return false;
-            if (Vector3.Distance(_player.transform.position,transform.position)<distacePlayer)
+
+            bool isInDistance = Vector3.Distance(_player.transform.position, transform.position) < distacePlayer;
+            print(isInDistance);
+            if (isInDistance)
             {
-               _fighter.MoveToTarget();
+               _fighter.Attack(_player);
+               
+
+            }
+            else
+            {
                 
+                _fighter.Cancel();
             }
 
-            return false;
+            
 
         }
     }

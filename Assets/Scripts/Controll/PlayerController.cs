@@ -27,6 +27,7 @@ namespace RPG.Control
         // Update is called once per frame
         void Update()
         {
+            
             if (Combat()) return;
             if (Move()) return;
             

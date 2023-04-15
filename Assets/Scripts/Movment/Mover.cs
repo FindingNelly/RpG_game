@@ -23,10 +23,7 @@ namespace RPG.Movment
         {
             //navmesh
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _navMeshAgent.speed = 5.66f;
-            _navMeshAgent.acceleration = 1000;
-            _navMeshAgent.angularSpeed = 4000;
-            _navMeshAgent.radius = 0.3f;
+            
             _actionScheduler = GetComponent<ActionScheduler>();
 
             _animator = GetComponent<Animator>();
@@ -51,6 +48,7 @@ namespace RPG.Movment
         }
         public void Cancel()
         {
+            
             _navMeshAgent.isStopped = true;
         }
 

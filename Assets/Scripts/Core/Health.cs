@@ -5,13 +5,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-namespace RPG.Combat
+namespace RPG.Core
 {
 
     public class Health : MonoBehaviour
     {
         //getters
         private Animator _animator;
+        private ActionScheduler _actionScheduler;
         
         //public variables
         public float health = 100;
@@ -22,6 +23,7 @@ namespace RPG.Combat
         void Start()
         {
             _animator = GetComponent<Animator>();
+            _actionScheduler = GetComponent<ActionScheduler>();
             hasDied = false;
         }
 
@@ -54,7 +56,7 @@ namespace RPG.Combat
             _animator.SetTrigger("die");
             GetComponent<Collider>().enabled = false;
             GetComponent<NavMeshAgent>().enabled = false;
-            
+            _actionScheduler.CancelCurrentAction();
 
 
         }
