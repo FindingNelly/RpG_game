@@ -56,6 +56,7 @@ namespace RPG.Combat
             GetComponent<NavMeshAgent>().enabled = false;
             
 
+
         }
     }
 }

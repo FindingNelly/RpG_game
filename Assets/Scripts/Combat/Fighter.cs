@@ -6,13 +6,14 @@ using RPG.Movment;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
         //getters
-        Health _target;
+        public Health target;
         private ActionScheduler _actionScheduler;
         private Mover _mover;
         private Animator _animator;
@@ -39,7 +40,7 @@ namespace RPG.Combat
 
         private void Update()
         {
-            if(_target==null) return;
+            if(target==null) return;
             
             MoveToTarget();
         }
@@ -48,19 +49,21 @@ namespace RPG.Combat
         {
             _timeSinceLastAttack += Time.deltaTime;
             //print(timeSinceLastAttack);
-            if (_target==null) return;
+            if (target==null) return;
             
             
             
-            if (Vector3.Distance(transform.position,_target.transform.position)>weponRange || _target.hasDied)
+            if (Vector3.Distance(transform.position,target.transform.position)>weponRange || target.hasDied)
             {
-                _mover.MoveTo(_target.transform.position);
+                
+                _mover.MoveTo(target.transform.position);
                 
             }
             else
             {
-                AttackBehaviour();
                 _mover.Cancel();
+                AttackBehaviour();
+                
                
             }
             
@@ -68,12 +71,13 @@ namespace RPG.Combat
 
         public void AttackBehaviour()
         {
-            transform.LookAt(_target.transform);
+            transform.LookAt(target.transform);
             
-            if (_target.hasDied) 
+            if (target.hasDied) 
             {
                 _animator.ResetTrigger("attack");
                 _animator.SetTrigger("stopAttacking");
+                
                 return;
             }
            
@@ -88,6 +92,7 @@ namespace RPG.Combat
                 _animator.SetTrigger("attack");
                 
                 _timeSinceLastAttack = 0;
+                
             }
             
         }
@@ -96,17 +101,17 @@ namespace RPG.Combat
         public void Hit()
         {
             
-            if (_target == null) return;
-            _target.TakeDamage(damage);
-            print(_target.health);
+            if (target == null) return;
+            target.TakeDamage(damage);
+            print(target.health);
            
         }
 
-        public void Attack(CombatTraget combatTraget)
+        public void Attack(GameObject combatTraget)
         {
             
             _actionScheduler.StartAction(this);
-            _target = combatTraget.GetComponent<Health>();
+            target = combatTraget.GetComponent<Health>();
             
             
         }
@@ -115,7 +120,7 @@ namespace RPG.Combat
         {
             
             
-            _target=null;
+            target=null;
         }
 
        
