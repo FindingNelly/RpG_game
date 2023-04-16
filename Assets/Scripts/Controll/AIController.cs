@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using RPG.Combat;
@@ -54,7 +55,13 @@ namespace RPG.Control
             }
 
             
+        }
 
+        //called by unity
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color=Color.blue;
+            Gizmos.DrawWireSphere(transform.position,distacePlayer);
         }
     }
 
