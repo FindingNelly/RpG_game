@@ -7,6 +7,7 @@ using RPG.Movment;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace RPG.Control
 {
@@ -14,18 +15,20 @@ namespace RPG.Control
     {
         private Fighter _fighter;
         private Mover _mover;
-        private NavMeshAgent _navMeshAgent;
+       
         private GameObject _player;
         private Health _health;
+        private Vector3 _startPosition;
         
-        public float distacePlayer=5;
+        public bool isGuarding;
+        [FormerlySerializedAs("followerDistance")] public float followDistance=5;
         // Start is called before the first frame update
         void Start()
         {
             _fighter = GetComponent<Fighter>();
             _mover = GetComponent<Mover>();
-            _navMeshAgent = GetComponent<NavMeshAgent>();
             _health = GetComponent<Health>();
+            _startPosition = transform.position;
 
         }
 
@@ -40,8 +43,8 @@ namespace RPG.Control
         {
             _player = GameObject.FindWithTag("Player");
 
-            bool isInDistance = Vector3.Distance(_player.transform.position, transform.position) < distacePlayer;
-            print(isInDistance);
+            bool isInDistance = Vector3.Distance(_player.transform.position, transform.position) < followDistance;
+            
             if (isInDistance)
             {
                _fighter.Attack(_player);
@@ -52,8 +55,12 @@ namespace RPG.Control
             {
                 
                 _fighter.Cancel();
+                if (isGuarding)
+                {
+                    GuardingBehaviour(_startPosition);
+                }
             }
-
+            
             
         }
 
@@ -61,8 +68,13 @@ namespace RPG.Control
         private void OnDrawGizmosSelected()
         {
             Gizmos.color=Color.blue;
-            Gizmos.DrawWireSphere(transform.position,distacePlayer);
+            Gizmos.DrawWireSphere(transform.position,followDistance);
         }
+
+        private void GuardingBehaviour(Vector3 destination)
+        {
+            _mover.StartMoveAction(destination);
+        } 
     }
 
 }
