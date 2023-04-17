@@ -15,10 +15,16 @@ namespace RPG.Control
     {
         private Fighter _fighter;
         private Mover _mover;
+        private ActionScheduler _actionScheduler;
+        private PathController _pathController;
        
         private GameObject _player;
         private Health _health;
         private Vector3 _startPosition;
+        private float _timeSinceLastSeenPlayer;
+        public float supisionTime = 2;
+        public PathController patrolpath;
+        
         
         public bool isGuarding;
         [FormerlySerializedAs("followerDistance")] public float followDistance=5;
@@ -28,15 +34,20 @@ namespace RPG.Control
             _fighter = GetComponent<Fighter>();
             _mover = GetComponent<Mover>();
             _health = GetComponent<Health>();
+            _actionScheduler = GetComponent<ActionScheduler>();
             _startPosition = transform.position;
+            _timeSinceLastSeenPlayer = Mathf.Infinity;
+            _pathController = GetComponent<PathController>();
 
         }
 
         // Update is called once per frame
         void Update()
         {
+            _timeSinceLastSeenPlayer += Time.deltaTime;
             if(_health.hasDied) return;
             Move();
+            
         }
 
         private void Move()
@@ -48,25 +59,26 @@ namespace RPG.Control
             if (isInDistance)
             {
                _fighter.Attack(_player);
-               
+               _timeSinceLastSeenPlayer = 0;
 
+            }
+            else if(isGuarding&& _timeSinceLastSeenPlayer<supisionTime)
+            {
+                _actionScheduler.CancelCurrentAction();
             }
             else
             {
-                
-                _fighter.Cancel();
-                if (isGuarding)
-                {
-                    GuardingBehaviour(_startPosition);
-                }
+                _mover.StartMoveAction(_startPosition);
             }
             
             
         }
 
         //called by unity
+        
         private void OnDrawGizmosSelected()
         {
+            
             Gizmos.color=Color.blue;
             Gizmos.DrawWireSphere(transform.position,followDistance);
         }
