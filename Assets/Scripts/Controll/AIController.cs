@@ -35,9 +35,18 @@ namespace RPG.Control
             _mover = GetComponent<Mover>();
             _health = GetComponent<Health>();
             _actionScheduler = GetComponent<ActionScheduler>();
-            _startPosition = transform.position;
+            
             _timeSinceLastSeenPlayer = Mathf.Infinity;
             _pathController = GetComponent<PathController>();
+            if (patrolpath!=null)
+            {
+                transform.position = patrolpath.transform.GetChild(0).position;
+                _startPosition = patrolpath.transform.GetChild(0).position;
+            }
+            else
+            {
+                _startPosition = transform.position;
+            }
 
         }
 
@@ -68,7 +77,7 @@ namespace RPG.Control
             }
             else
             {
-                _mover.StartMoveAction(_startPosition);
+                PatrolBehaviour();
             }
             
             
@@ -83,10 +92,35 @@ namespace RPG.Control
             Gizmos.DrawWireSphere(transform.position,followDistance);
         }
 
-        private void GuardingBehaviour(Vector3 destination)
+        private void PatrolBehaviour()
         {
-            _mover.StartMoveAction(destination);
+            Vector3 nextPosition = _startPosition;
+            
+            if (patrolpath!=null)
+            {
+                
+                if (AtWaypoint(patrolpath.GetWaypoint(0)))
+                {
+                    print("yeey");
+                }
+
+                nextPosition = patrolpath.GetWaypoint(1);
+            }
+            
+            _mover.StartMoveAction(nextPosition);
         } 
+        
+        private bool AtWaypoint(Vector3 targetPosition)
+        {
+            if (targetPosition==transform.position)
+            {
+                return true;
+            }
+
+            return false;
+        }
+         
+        
     }
 
 }
