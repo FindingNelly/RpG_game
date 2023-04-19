@@ -24,6 +24,7 @@ namespace RPG.Control
             Vector3 size = new Vector3(0.2f, 0.2f, 2f);
             for (int i = 0; i < transform.childCount;i++)
             {
+                if(gameObject.transform.CompareTag("Enemy")) continue;
                 int j = GetNextIndex(i);
                 Gizmos.color=Color.grey;
                 Gizmos.DrawCube(GetWaypoint(i),new Vector3(0.3f, 0.3f, 0.3f));

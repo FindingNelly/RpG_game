@@ -23,10 +23,12 @@ namespace RPG.Control
         private Health _health;
         private Vector3 _startPosition;
         private float _timeSinceLastSeenPlayer;
+        private float _timeAtWaypoint;
         public float supisionTime = 2;
         public PathController patrolpath;
         private int _currentWaypointIndex=0;
         public float toleranceDistance = 2f;
+        public float dweleTime = 2;
         
         
         public bool isGuarding;
@@ -34,12 +36,14 @@ namespace RPG.Control
         // Start is called before the first frame update
         void Start()
         {
+            _timeAtWaypoint = 0;
             _fighter = GetComponent<Fighter>();
             _mover = GetComponent<Mover>();
             _health = GetComponent<Health>();
             _actionScheduler = GetComponent<ActionScheduler>();
             
             _timeSinceLastSeenPlayer = Mathf.Infinity;
+            _timeAtWaypoint = 0;
             _pathController = GetComponent<PathController>();
             if (patrolpath!=null)
             {
@@ -57,8 +61,10 @@ namespace RPG.Control
         void Update()
         {
             _timeSinceLastSeenPlayer += Time.deltaTime;
+            
             if(_health.hasDied) return;
             Move();
+            print(_timeAtWaypoint);
             
         }
 
@@ -102,12 +108,29 @@ namespace RPG.Control
             if (patrolpath!=null)
             {
                 
+                
+                
                 if (AtWaypoint())
                 {
-                    CycleWaypoint();
+                    _timeAtWaypoint += Time.deltaTime;
+                    
+                    
+                    print("yeey");
+                    if (_timeAtWaypoint>dweleTime)
+                    {
+                        CycleWaypoint();
+                        _timeAtWaypoint = 0;
+                    }
+                    
+                    
+                    
+                    
+                    
                 }
-
+                
                 nextPosition = GetCurrentWaypoint();
+                   
+                
             }
             
             _mover.StartMoveAction(nextPosition);
