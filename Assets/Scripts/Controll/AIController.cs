@@ -5,6 +5,7 @@ using RPG.Combat;
 using RPG.Core;
 using RPG.Movment;
 using Unity.VisualScripting;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -24,6 +25,8 @@ namespace RPG.Control
         private float _timeSinceLastSeenPlayer;
         public float supisionTime = 2;
         public PathController patrolpath;
+        private int _currentWaypointIndex=0;
+        public float toleranceDistance = 2f;
         
         
         public bool isGuarding;
@@ -99,28 +102,38 @@ namespace RPG.Control
             if (patrolpath!=null)
             {
                 
-                if (AtWaypoint(patrolpath.GetWaypoint(0)))
+                if (AtWaypoint())
                 {
-                    print("yeey");
+                    CycleWaypoint();
                 }
 
-                nextPosition = patrolpath.GetWaypoint(1);
+                nextPosition = GetCurrentWaypoint();
             }
             
             _mover.StartMoveAction(nextPosition);
         } 
         
-        private bool AtWaypoint(Vector3 targetPosition)
+        private bool AtWaypoint()
         {
-            if (targetPosition==transform.position)
+            if (Vector3.Distance(transform.position,GetCurrentWaypoint())<toleranceDistance)
             {
                 return true;
             }
 
             return false;
         }
-         
-        
+
+        private Vector3 GetCurrentWaypoint()
+        {
+            return patrolpath.GetWaypoint(_currentWaypointIndex);
+        }
+
+        private void CycleWaypoint()
+        {
+            _currentWaypointIndex = patrolpath.GetNextIndex(_currentWaypointIndex);
+        }
+
+
     }
 
 }

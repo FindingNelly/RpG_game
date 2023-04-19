@@ -24,21 +24,22 @@ namespace RPG.Control
             Vector3 size = new Vector3(0.2f, 0.2f, 2f);
             for (int i = 0; i < transform.childCount;i++)
             {
+                int j = GetNextIndex(i);
                 Gizmos.color=Color.grey;
                 Gizmos.DrawCube(GetWaypoint(i),new Vector3(0.3f, 0.3f, 0.3f));
-                Gizmos.DrawLine(GetWaypoint(i),GetNextIndex(i));
+                Gizmos.DrawLine(GetWaypoint(i),GetWaypoint(j));
             }
         }
 
-        private Vector3 GetNextIndex(int i)
+        public int GetNextIndex(int i)
         {
             if (transform.childCount==i+1)
             {
-                return transform.GetChild(0).position;
+                return 0;
                 
                 
             }
-            return transform.GetChild(i+1).position;
+            return i+1;
             
         }
 
