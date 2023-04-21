@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 721830868601328161, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.74
+      value: -1.727
       objectReference: {fileID: 0}
     - target: {fileID: 721830868601328161, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
       propertyPath: m_LocalPosition.y
@@ -82,7 +82,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 721830868601328161, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.5
+      value: -4.974
       objectReference: {fileID: 0}
     - target: {fileID: 721830868601328161, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
       propertyPath: m_LocalRotation.w
@@ -114,7 +114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 721830868601328166, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
       propertyPath: m_Name
-      value: Gaurd
+      value: 'Gaurd '
       objectReference: {fileID: 0}
     - target: {fileID: 721830868601328605, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
       propertyPath: m_Speed
@@ -128,6 +128,10 @@ PrefabInstance:
       propertyPath: isGuarding
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9162352623194588959, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
+      propertyPath: supisionTime
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
 --- !u!4 &4774498744486728256 stripped
@@ -135,3 +139,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 721830868601328161, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
   m_PrefabInstance: {fileID: 5207876503803183201}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4774498744486728263 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 721830868601328166, guid: e94be33dc64500e4594329737c6b6f65, type: 3}
+  m_PrefabInstance: {fileID: 5207876503803183201}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1270478038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4774498744486728263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b6690c82d948a44b93353bf95cd499f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
